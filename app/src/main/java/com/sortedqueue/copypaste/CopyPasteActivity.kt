@@ -14,6 +14,9 @@ import com.sortedqueue.copypaste.data.PreferencesView
 
 import kotlinx.android.synthetic.main.activity_copy_paste.*
 import kotlinx.android.synthetic.main.content_copy_paste.*
+import android.content.Intent
+
+
 
 class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener {
     override fun onSuccess(messageTitle: MessageTitle) {
@@ -49,7 +52,11 @@ class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener {
     }
 
     override fun sendMessage(messageTitle: MessageTitle) {
-
+        val sendIntent = Intent()
+        sendIntent.action = Intent.ACTION_SEND
+        sendIntent.putExtra(Intent.EXTRA_TEXT, messageTitle.messageContent)
+        sendIntent.type = "text/plain"
+        startActivity(sendIntent)
     }
 
     override fun addEditTemplate( messageTitle: MessageTitle? ) {
