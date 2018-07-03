@@ -9,4 +9,5 @@ interface MainView : BaseView {
     fun onSuccess(allMessages: ArrayList<MessageTitle>)
     fun addEditTemplate( messageTitle: MessageTitle? )
     fun removeTemplate( messageTitle: MessageTitle )
+    fun sendMessage( messageTitle: MessageTitle )
 }

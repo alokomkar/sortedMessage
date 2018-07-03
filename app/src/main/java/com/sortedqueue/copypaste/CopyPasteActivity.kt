@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.content_copy_paste.*
 
 class CopyPasteActivity : AppCompatActivity(), MainView {
 
+
     private lateinit var presenterView : PresenterView
     private lateinit var preferencesView : PreferencesView
     private var contentAdapter : ContentRVAdapter ?= null
@@ -34,6 +35,10 @@ class CopyPasteActivity : AppCompatActivity(), MainView {
     }
 
     override fun showError(errorMessage: Int) {
+
+    }
+
+    override fun sendMessage(messageTitle: MessageTitle) {
 
     }
 
