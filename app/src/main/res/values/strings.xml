@@ -4,4 +4,7 @@
     <string name="logo">logo</string>
     <string name="cancelled_error">Canceled task</string>
     <string name="loading">Loading</string>
+    <string name="send">send</string>
+    <string name="delete">delete</string>
+    <string name="edit">edit</string>
 </resources>

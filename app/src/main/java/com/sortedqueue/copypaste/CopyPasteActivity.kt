@@ -38,7 +38,7 @@ class CopyPasteActivity : AppCompatActivity(), MainView {
     }
 
     override fun addEditTemplate( messageTitle: MessageTitle? ) {
-        if( contentAdapter != null )
+        if( contentAdapter != null && messageTitle != null )
             contentAdapter?.addMessage( messageTitle )
     }
 

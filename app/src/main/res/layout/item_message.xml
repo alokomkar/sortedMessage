@@ -1,21 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="@dimen/cardview_default_elevation"
+    app:cardCornerRadius="@dimen/cardview_default_radius"
+    android:layout_margin="@dimen/mini_padding"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:background="@android:color/white"
     android:layout_height="wrap_content">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        style="@style/Base.TextAppearance.AppCompat.Medium"
-        android:padding="@dimen/mini_padding"
-        android:id="@+id/contentTv"/>
+        android:layout_height="wrap_content">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/divider_height"
-        android:background="@color/divider_color"
-        />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/ivEdit"
+            android:layout_toStartOf="@+id/ivEdit"
+            android:text="@string/app_name"
+            style="@style/Base.TextAppearance.AppCompat.Medium"
+            android:padding="@dimen/mini_padding"
+            android:id="@+id/titleTv"
+            />
 
-</LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivSend"
+            android:text="@string/app_name"
+            style="@style/Base.TextAppearance.AppCompat.Small"
+            android:padding="@dimen/mini_padding"
+            android:id="@+id/contentTv"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/micro_padding"
+            android:layout_toLeftOf="@+id/ivDelete"
+            android:layout_toStartOf="@+id/ivDelete"
+            android:src="@android:drawable/ic_menu_edit"
+            android:id="@+id/ivEdit"
+            android:contentDescription="@string/edit" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/micro_padding"
+            android:layout_toLeftOf="@+id/ivSend"
+            android:layout_toStartOf="@+id/ivSend"
+            android:src="@android:drawable/ic_menu_delete"
+            android:contentDescription="@string/delete"
+            android:id="@+id/ivDelete" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/micro_padding"
+            android:src="@android:drawable/ic_menu_send"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/send"
+            android:id="@+id/ivSend"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+
+
+
+
+</android.support.v7.widget.CardView>
