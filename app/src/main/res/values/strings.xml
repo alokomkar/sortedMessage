@@ -7,4 +7,7 @@
     <string name="send">send</string>
     <string name="delete">delete</string>
     <string name="edit">edit</string>
+    <string name="save">SAVE</string>
+    <string name="cancel">CANCEL</string>
+    <string name="type_your_message">Type your message</string>
 </resources>

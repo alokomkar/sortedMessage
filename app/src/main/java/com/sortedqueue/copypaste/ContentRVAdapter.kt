@@ -50,7 +50,14 @@ class ContentRVAdapter( private val messageList: ArrayList<MessageTitle>,
     }
 
     fun addMessage(messageTitle: MessageTitle?) {
-        messageList.add(messageTitle!!)
+
+        val index = messageList.indexOf( messageTitle )
+        if( index != -1 ) {
+            messageList.add(index, messageTitle!!)
+        }
+        else
+            messageList.add( messageTitle!! )
+
         notifyItemInserted(messageList.size - 1)
     }
 

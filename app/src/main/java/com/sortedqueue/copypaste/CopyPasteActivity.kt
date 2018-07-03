@@ -6,14 +6,24 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import com.sortedqueue.copypaste.base.MessageListener
 import com.sortedqueue.copypaste.base.TYPE_TEXT
 import com.sortedqueue.copypaste.base.hide
+import com.sortedqueue.copypaste.base.showInputDialog
 import com.sortedqueue.copypaste.data.PreferencesView
 
 import kotlinx.android.synthetic.main.activity_copy_paste.*
 import kotlinx.android.synthetic.main.content_copy_paste.*
 
-class CopyPasteActivity : AppCompatActivity(), MainView {
+class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener {
+    override fun onSuccess(messageTitle: MessageTitle) {
+        if( contentAdapter != null )
+            contentAdapter?.addMessage( messageTitle )
+    }
+
+    override fun onCancel() {
+
+    }
 
 
     private lateinit var presenterView : PresenterView
@@ -43,8 +53,7 @@ class CopyPasteActivity : AppCompatActivity(), MainView {
     }
 
     override fun addEditTemplate( messageTitle: MessageTitle? ) {
-        if( contentAdapter != null && messageTitle != null )
-            contentAdapter?.addMessage( messageTitle )
+        this.showInputDialog( messageTitle!!, this )
     }
 
     override fun removeTemplate( messageTitle: MessageTitle ) {
@@ -65,7 +74,7 @@ class CopyPasteActivity : AppCompatActivity(), MainView {
         contentRecyclerView.layoutManager = LinearLayoutManager( this )
 
         fab.setOnClickListener { view ->
-            addEditTemplate( MessageTitle(System.currentTimeMillis(), "New Message " + System.currentTimeMillis(), TYPE_TEXT, 0) )
+            addEditTemplate( MessageTitle(System.currentTimeMillis(), "Adding Message " + System.currentTimeMillis(), TYPE_TEXT, 0) )
             Snackbar.make(view, "Message added", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/default_margin"
+        android:hint="@string/type_your_message"
+        android:minLines="3"
+        android:id="@+id/etMessage"
+        tools:text="@string/app_name"
+        android:background="@android:color/transparent"/>
+
+
+    <TextView
+        android:layout_below="@+id/etMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvSave"
+        android:layout_margin="@dimen/mini_padding"
+        android:textColor="@android:color/holo_green_dark"
+        android:padding="@dimen/mini_padding"
+        android:text="@string/save"/>
+
+    <TextView
+        android:layout_below="@+id/etMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/mini_padding"
+        android:layout_toRightOf="@+id/tvSave"
+        android:layout_toEndOf="@+id/tvSave"
+        android:textColor="@android:color/holo_red_light"
+        android:id="@+id/tvCancel"
+        android:padding="@dimen/mini_padding"
+        android:text="@string/cancel" />
+
+</RelativeLayout>
