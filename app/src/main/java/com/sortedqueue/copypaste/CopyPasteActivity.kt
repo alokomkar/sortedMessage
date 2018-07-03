@@ -20,6 +20,7 @@ import android.content.Intent
 
 class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener {
     override fun onSuccess(messageTitle: MessageTitle) {
+        preferencesView.addMessage( messageTitle )
         if( contentAdapter != null )
             contentAdapter?.addMessage( messageTitle )
     }
