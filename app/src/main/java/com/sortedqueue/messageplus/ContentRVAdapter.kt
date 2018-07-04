@@ -33,6 +33,7 @@ class ContentRVAdapter(private val messageList: ArrayList<MessageTitle>,
                 when( view?.id ) {
                     R.id.ivDelete -> mainView.removeTemplate( messageList[position] )
                     R.id.ivSend -> mainView.sendMessage( messageList[position] )
+                    R.id.ivAlarm -> mainView.setAlarm( messageList[position] )
                     R.id.contentTv, R.id.titleTv -> mainView.addEditTemplate( messageList[position] )
                 }
             }
@@ -42,8 +43,10 @@ class ContentRVAdapter(private val messageList: ArrayList<MessageTitle>,
         val titleTv : TextView = itemView.findViewById(R.id.titleTv)
         val ivDelete : ImageView = itemView.findViewById(R.id.ivDelete)
         val ivSend : ImageView = itemView.findViewById(R.id.ivSend)
+        val ivAlarm : ImageView = itemView.findViewById(R.id.ivAlarm)
 
         init {
+            ivAlarm.setOnClickListener( this )
             titleTv.setOnClickListener( this )
             contentTv.setOnClickListener( this )
             ivDelete.setOnClickListener( this )

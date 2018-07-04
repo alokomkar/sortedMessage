@@ -15,9 +15,12 @@ import com.sortedqueue.messageplus.data.PreferencesView
 import kotlinx.android.synthetic.main.activity_copy_paste.*
 import kotlinx.android.synthetic.main.content_copy_paste.*
 import android.content.Intent
+import android.widget.DatePicker
 
 
 class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener {
+
+
     override fun onSuccess(messageTitle: MessageTitle) {
         preferencesView.addMessage( messageTitle )
         if( contentAdapter != null )
@@ -63,6 +66,10 @@ class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener {
         this.showInputDialog( messageTitle!!, this )
     }
 
+    override fun setAlarm(messageTitle: MessageTitle) {
+
+    }
+
     override fun removeTemplate( messageTitle: MessageTitle) {
         if( contentAdapter != null ) {
             contentAdapter?.removeMessage( messageTitle )
@@ -84,7 +91,7 @@ class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener {
         contentRecyclerView.layoutManager = LinearLayoutManager( this )
 
         fab.setOnClickListener { view ->
-            addEditTemplate(MessageTitle(System.currentTimeMillis(), "", "", TYPE_TEXT, 0))
+            addEditTemplate( MessageTitle(System.currentTimeMillis(), "", "", TYPE_TEXT, 0) )
             Snackbar.make(view, "Message added", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
@@ -93,7 +100,7 @@ class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener {
     }
 
     private fun handleShare() {
-        if ( intent != null && Intent.ACTION_SEND.equals(intent.action) && intent.type != null ) {
+        if ( intent != null && Intent.ACTION_SEND == intent.action && intent.type != null ) {
             if ("text/plain" == intent.type) {
                 addEditTemplate(MessageTitle(System.currentTimeMillis(), "", intent.getStringExtra(Intent.EXTRA_TEXT), TYPE_TEXT, 0))
             }

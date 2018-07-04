@@ -10,4 +10,5 @@ interface MainView : BaseView {
     fun addEditTemplate( messageTitle: MessageTitle? )
     fun removeTemplate( messageTitle: MessageTitle)
     fun sendMessage( messageTitle: MessageTitle)
+    fun setAlarm( messageTitle: MessageTitle )
 }

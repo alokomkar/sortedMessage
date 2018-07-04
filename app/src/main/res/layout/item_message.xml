@@ -11,7 +11,7 @@
     android:background="@android:color/white"
     android:layout_height="wrap_content">
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -25,7 +25,19 @@
             android:id="@+id/titleTv"
             />
 
+        <ImageView
+            android:id="@+id/ivAlarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/mini_padding"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:contentDescription="@string/alarm"
+            app:srcCompat="@drawable/ic_alarm_off_black_24dp"
+            />
+
         <TextView
+            android:layout_below="@+id/titleTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
@@ -34,6 +46,7 @@
             android:id="@+id/contentTv"/>
 
         <LinearLayout
+            android:layout_below="@+id/contentTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -64,7 +77,7 @@
 
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
 
