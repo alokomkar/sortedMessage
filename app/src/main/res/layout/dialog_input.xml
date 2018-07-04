@@ -38,4 +38,16 @@
         android:padding="@dimen/mini_padding"
         android:text="@string/cancel" />
 
+    <TextView
+        android:layout_below="@+id/etMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/mini_padding"
+        android:layout_toRightOf="@+id/tvCancel"
+        android:layout_toEndOf="@+id/tvCancel"
+        android:textColor="@android:color/darker_gray"
+        android:id="@+id/tvClear"
+        android:padding="@dimen/mini_padding"
+        android:text="@string/clear" />
+
 </RelativeLayout>

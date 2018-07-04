@@ -84,7 +84,7 @@ class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener {
         contentRecyclerView.layoutManager = LinearLayoutManager( this )
 
         fab.setOnClickListener { view ->
-            addEditTemplate(MessageTitle(System.currentTimeMillis(), "Adding Message " + System.currentTimeMillis(), TYPE_TEXT, 0))
+            addEditTemplate(MessageTitle(System.currentTimeMillis(), "", "", TYPE_TEXT, 0))
             Snackbar.make(view, "Message added", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
@@ -95,7 +95,7 @@ class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener {
     private fun handleShare() {
         if ( intent != null && Intent.ACTION_SEND.equals(intent.action) && intent.type != null ) {
             if ("text/plain" == intent.type) {
-                addEditTemplate(MessageTitle(System.currentTimeMillis(), intent.getStringExtra(Intent.EXTRA_TEXT), TYPE_TEXT, 0))
+                addEditTemplate(MessageTitle(System.currentTimeMillis(), "", intent.getStringExtra(Intent.EXTRA_TEXT), TYPE_TEXT, 0))
             }
         }
     }

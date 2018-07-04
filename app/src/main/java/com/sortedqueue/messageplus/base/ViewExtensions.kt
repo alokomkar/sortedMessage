@@ -58,6 +58,9 @@ fun Context.showInputDialog(messageTitle: MessageTitle, messageListener: Message
         messageListener.onCancel()
         alertDialog.dismiss()
     }
+    dialogView.findViewById<TextView>(R.id.tvClear).setOnClickListener {
+        editText.setText("")
+    }
     alertDialog.show()
 
 }

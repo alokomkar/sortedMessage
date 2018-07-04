@@ -1,11 +1,14 @@
 package com.sortedqueue.messageplus
 
+import com.sortedqueue.messageplus.base.TYPE_TEXT
+
 /**
  * Created by Alok on 02/07/18.
  */
-data class MessageTitle( var messageId : Long,
-                         var messageContent : String,
-                         var messageType : Int,
+class MessageTitle( var messageId : Long = 0L,
+                         var messageTitle: String = "",
+                         var messageContent : String = "",
+                         var messageType : Int = TYPE_TEXT,
                          var sendCount : Int = 0 ) {
 
     override fun equals(other: Any?): Boolean {
@@ -14,15 +17,12 @@ data class MessageTitle( var messageId : Long,
 
         other as MessageTitle
 
-        if (messageContent != other.messageContent) return false
-        if (messageType != other.messageType) return false
+        if (messageId != other.messageId) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        var result = messageContent.hashCode()
-        result = 31 * result + messageType
-        return result
+        return messageId.hashCode()
     }
 }
