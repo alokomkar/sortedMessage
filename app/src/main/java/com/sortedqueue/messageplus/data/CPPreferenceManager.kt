@@ -1,11 +1,11 @@
-package com.sortedqueue.copypaste.data
+package com.sortedqueue.messageplus.data
 
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.google.gson.Gson
-import com.sortedqueue.copypaste.MessageTitle
-import com.sortedqueue.copypaste.base.MESSAGE_LIST
+import com.sortedqueue.messageplus.MessageTitle
+import com.sortedqueue.messageplus.base.MESSAGE_LIST
 
 /**
  * Created by Alok on 02/07/18.

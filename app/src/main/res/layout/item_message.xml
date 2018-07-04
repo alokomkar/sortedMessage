@@ -11,15 +11,14 @@
     android:background="@android:color/white"
     android:layout_height="wrap_content">
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/ivEdit"
-            android:layout_toStartOf="@+id/ivEdit"
             android:text="@string/app_name"
             style="@style/Base.TextAppearance.AppCompat.Medium"
             android:padding="@dimen/mini_padding"
@@ -29,43 +28,43 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ivSend"
             android:text="@string/app_name"
             style="@style/Base.TextAppearance.AppCompat.Small"
             android:padding="@dimen/mini_padding"
             android:id="@+id/contentTv"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/micro_padding"
-            android:layout_toLeftOf="@+id/ivDelete"
-            android:layout_toStartOf="@+id/ivDelete"
-            android:src="@android:drawable/ic_menu_edit"
-            android:id="@+id/ivEdit"
-            android:contentDescription="@string/edit" />
+            android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/micro_padding"
-            android:layout_toLeftOf="@+id/ivSend"
-            android:layout_toStartOf="@+id/ivSend"
-            android:src="@android:drawable/ic_menu_delete"
-            android:contentDescription="@string/delete"
-            android:id="@+id/ivDelete" />
+            <ImageView
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:background="@android:color/holo_red_light"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/micro_padding"
+                android:src="@android:drawable/ic_menu_delete"
+                android:contentDescription="@string/delete"
+                android:id="@+id/ivDelete" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/micro_padding"
-            android:src="@android:drawable/ic_menu_send"
-            android:layout_alignParentEnd="true"
-            android:contentDescription="@string/send"
-            android:id="@+id/ivSend"
-            android:layout_alignParentRight="true" />
+            <ImageView
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:background="@android:color/holo_green_light"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/micro_padding"
+                android:src="@android:drawable/ic_menu_send"
+                android:contentDescription="@string/send"
+                android:id="@+id/ivSend" />
 
-    </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
 
 
 

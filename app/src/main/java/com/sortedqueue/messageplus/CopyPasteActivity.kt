@@ -1,4 +1,4 @@
-package com.sortedqueue.copypaste
+package com.sortedqueue.messageplus
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -6,16 +6,15 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
-import com.sortedqueue.copypaste.base.MessageListener
-import com.sortedqueue.copypaste.base.TYPE_TEXT
-import com.sortedqueue.copypaste.base.hide
-import com.sortedqueue.copypaste.base.showInputDialog
-import com.sortedqueue.copypaste.data.PreferencesView
+import com.sortedqueue.messageplus.base.MessageListener
+import com.sortedqueue.messageplus.base.TYPE_TEXT
+import com.sortedqueue.messageplus.base.hide
+import com.sortedqueue.messageplus.base.showInputDialog
+import com.sortedqueue.messageplus.data.PreferencesView
 
 import kotlinx.android.synthetic.main.activity_copy_paste.*
 import kotlinx.android.synthetic.main.content_copy_paste.*
 import android.content.Intent
-
 
 
 class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener {
@@ -32,7 +31,7 @@ class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener {
 
     private lateinit var presenterView : PresenterView
     private lateinit var preferencesView : PreferencesView
-    private var contentAdapter : ContentRVAdapter ?= null
+    private var contentAdapter : ContentRVAdapter?= null
 
     override fun showProgress( message: Int ) {
 
@@ -40,7 +39,7 @@ class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener {
 
     override fun onSuccess( allMessages: ArrayList<MessageTitle> ) {
         ivSplash.hide()
-        contentAdapter = ContentRVAdapter( allMessages, this )
+        contentAdapter = ContentRVAdapter(allMessages, this)
         contentRecyclerView.adapter = contentAdapter
     }
 
@@ -64,9 +63,12 @@ class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener {
         this.showInputDialog( messageTitle!!, this )
     }
 
-    override fun removeTemplate( messageTitle: MessageTitle ) {
-        if( contentAdapter != null )
+    override fun removeTemplate( messageTitle: MessageTitle) {
+        if( contentAdapter != null ) {
             contentAdapter?.removeMessage( messageTitle )
+            preferencesView.removeMessage( messageTitle )
+        }
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,15 +78,25 @@ class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener {
 
         preferencesView = CPApplication.getPreferences()
 
-        presenterView = CopyPastePresenter( this, preferencesView )
+        presenterView = CopyPastePresenter(this, preferencesView)
         presenterView.loadTemplates()
 
         contentRecyclerView.layoutManager = LinearLayoutManager( this )
 
         fab.setOnClickListener { view ->
-            addEditTemplate( MessageTitle(System.currentTimeMillis(), "Adding Message " + System.currentTimeMillis(), TYPE_TEXT, 0) )
+            addEditTemplate(MessageTitle(System.currentTimeMillis(), "Adding Message " + System.currentTimeMillis(), TYPE_TEXT, 0))
             Snackbar.make(view, "Message added", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
+        }
+
+        handleShare()
+    }
+
+    private fun handleShare() {
+        if ( intent != null && Intent.ACTION_SEND.equals(intent.action) && intent.type != null ) {
+            if ("text/plain" == intent.type) {
+                addEditTemplate(MessageTitle(System.currentTimeMillis(), intent.getStringExtra(Intent.EXTRA_TEXT), TYPE_TEXT, 0))
+            }
         }
     }
 

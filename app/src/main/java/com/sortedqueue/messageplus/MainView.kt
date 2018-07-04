@@ -1,6 +1,6 @@
-package com.sortedqueue.copypaste
+package com.sortedqueue.messageplus
 
-import com.sortedqueue.copypaste.base.BaseView
+import com.sortedqueue.messageplus.base.BaseView
 
 /**
  * Created by Alok on 02/07/18.
@@ -8,6 +8,6 @@ import com.sortedqueue.copypaste.base.BaseView
 interface MainView : BaseView {
     fun onSuccess(allMessages: ArrayList<MessageTitle>)
     fun addEditTemplate( messageTitle: MessageTitle? )
-    fun removeTemplate( messageTitle: MessageTitle )
-    fun sendMessage( messageTitle: MessageTitle )
+    fun removeTemplate( messageTitle: MessageTitle)
+    fun sendMessage( messageTitle: MessageTitle)
 }

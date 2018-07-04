@@ -1,8 +1,8 @@
-package com.sortedqueue.copypaste
+package com.sortedqueue.messageplus
 
 import android.app.Application
-import com.sortedqueue.copypaste.data.CPPreferenceManager
-import com.sortedqueue.copypaste.data.PreferencesView
+import com.sortedqueue.messageplus.data.CPPreferenceManager
+import com.sortedqueue.messageplus.data.PreferencesView
 
 /**
  * Created by Alok on 02/07/18.
@@ -16,7 +16,7 @@ class CPApplication : Application() {
 
     companion object {
 
-        private var cpPreferences : PreferencesView ?= null
+        private var cpPreferences : PreferencesView?= null
 
         fun getPreferences() : PreferencesView {
 

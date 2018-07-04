@@ -8,7 +8,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion "27.0.3"
     defaultConfig {
-        applicationId "com.sortedqueue.copypaste"
+        applicationId "com.sortedqueue.messageplus"
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 1

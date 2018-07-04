@@ -1,8 +1,9 @@
-package com.sortedqueue.copypaste
+package com.sortedqueue.messageplus
 
 import android.annotation.SuppressLint
 import android.os.AsyncTask
-import com.sortedqueue.copypaste.data.PreferencesView
+import com.sortedqueue.messageplus.data.PreferencesView
+import com.sortedqueue.messageplus.R
 
 /**
  * Created by Alok on 02/07/18.

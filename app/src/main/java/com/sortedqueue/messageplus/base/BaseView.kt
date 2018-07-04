@@ -1,4 +1,4 @@
-package com.sortedqueue.copypaste.base
+package com.sortedqueue.messageplus.base
 
 /**
  * Created by Alok on 02/07/18.

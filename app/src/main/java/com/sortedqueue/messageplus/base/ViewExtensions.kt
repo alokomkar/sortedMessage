@@ -1,13 +1,13 @@
-package com.sortedqueue.copypaste.base
+package com.sortedqueue.messageplus.base
 
 import android.content.Context
 import android.support.v7.app.AlertDialog
 import android.view.View
-import com.sortedqueue.copypaste.MessageTitle
+import com.sortedqueue.messageplus.MessageTitle
 import android.widget.EditText
 import android.view.LayoutInflater
 import android.widget.TextView
-import com.sortedqueue.copypaste.R
+import com.sortedqueue.messageplus.R
 
 
 /**
@@ -34,11 +34,11 @@ fun View.toggleVisibility() {
 }
 
 interface MessageListener {
-    fun onSuccess( messageTitle: MessageTitle )
+    fun onSuccess( messageTitle: MessageTitle)
     fun onCancel()
 }
 
-fun Context.showInputDialog( messageTitle: MessageTitle, messageListener: MessageListener ) {
+fun Context.showInputDialog(messageTitle: MessageTitle, messageListener: MessageListener) {
 
     val dialogBuilder = AlertDialog.Builder(this)
 

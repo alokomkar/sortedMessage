@@ -1,4 +1,4 @@
-package com.sortedqueue.copypaste
+package com.sortedqueue.messageplus
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -6,19 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.sortedqueue.messageplus.R
 
 /**
  * Created by Alok on 02/07/18.
  */
-class ContentRVAdapter( private val messageList: ArrayList<MessageTitle>,
-                        private val mainView: MainView ) : RecyclerView.Adapter<ContentRVAdapter.ViewHolder>() {
+class ContentRVAdapter(private val messageList: ArrayList<MessageTitle>,
+                       private val mainView: MainView) : RecyclerView.Adapter<ContentRVAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
         return messageList.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-        return ViewHolder( LayoutInflater.from(parent?.context).inflate(R.layout.item_message, parent, false))
+        return ViewHolder( LayoutInflater.from(parent?.context).inflate(R.layout.item_message, parent, false) )
     }
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
@@ -32,18 +33,19 @@ class ContentRVAdapter( private val messageList: ArrayList<MessageTitle>,
                 when( view?.id ) {
                     R.id.ivDelete -> mainView.removeTemplate( messageList[position] )
                     R.id.ivSend -> mainView.sendMessage( messageList[position] )
-                    R.id.ivEdit -> mainView.addEditTemplate( messageList[position] )
+                    R.id.contentTv, R.id.titleTv -> mainView.addEditTemplate( messageList[position] )
                 }
             }
         }
 
         val contentTv : TextView = itemView.findViewById(R.id.contentTv)
-        val ivEdit : ImageView = itemView.findViewById(R.id.ivEdit)
+        val titleTv : TextView = itemView.findViewById(R.id.titleTv)
         val ivDelete : ImageView = itemView.findViewById(R.id.ivDelete)
         val ivSend : ImageView = itemView.findViewById(R.id.ivSend)
 
         init {
-            ivEdit.setOnClickListener( this )
+            titleTv.setOnClickListener( this )
+            contentTv.setOnClickListener( this )
             ivDelete.setOnClickListener( this )
             ivSend.setOnClickListener( this )
         }

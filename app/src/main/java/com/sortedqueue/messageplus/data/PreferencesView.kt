@@ -1,6 +1,6 @@
-package com.sortedqueue.copypaste.data
+package com.sortedqueue.messageplus.data
 
-import com.sortedqueue.copypaste.MessageTitle
+import com.sortedqueue.messageplus.MessageTitle
 
 /**
  * Created by Alok on 02/07/18.
