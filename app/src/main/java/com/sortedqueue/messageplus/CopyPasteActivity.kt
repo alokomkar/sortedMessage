@@ -26,21 +26,20 @@ class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener, DatePi
     override fun onTimeSet(p0: TimePicker?, hour: Int, minute: Int) {
         calendar.set(Calendar.HOUR_OF_DAY, hour)
         calendar.set(Calendar.MINUTE, minute)
-        currentMessageTitle.scheduleTime = calendar.timeInMillis
-        onSuccess(currentMessageTitle)
+        currentMessageTitle?.scheduleTime = calendar.timeInMillis
+        onSuccess(currentMessageTitle!!)
     }
 
     override fun onDateSet(p0: DatePicker?, year: Int, month: Int, day: Int) {
         calendar.set( year, month, day )
-        currentMessageTitle.scheduleTime = calendar.timeInMillis
+        currentMessageTitle?.scheduleTime = calendar.timeInMillis
         scheduleTime()
     }
 
     private fun scheduleTime() {
         val timePickerFragment = TimePickerFragment()
         val bundle = Bundle()
-        if( currentMessageTitle.scheduleTime == 0L ) currentMessageTitle.scheduleTime = Date().time
-        bundle.putLong( CURRENT_TIME, currentMessageTitle.scheduleTime )
+        bundle.putLong( CURRENT_TIME, currentMessageTitle!!.scheduleTime )
         timePickerFragment.arguments = bundle
         timePickerFragment.show( supportFragmentManager, "timePicker" )
     }
@@ -93,7 +92,7 @@ class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener, DatePi
         this.showInputDialog( messageTitle!!, this )
     }
 
-    private lateinit var currentMessageTitle: MessageTitle
+    private var currentMessageTitle: MessageTitle ?= null
 
     override fun setAlarm(messageTitle: MessageTitle) {
         val datePickerFragment = DatePickerFragment()

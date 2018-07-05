@@ -32,7 +32,7 @@ class CPPreferenceManager( context : Context ) : PreferencesView {
         val messageList = getMessageList()
         val index = messageList.messageList.indexOf(messageTitle)
         if( index != -1 ) {
-            messageList.messageList.add(index, messageTitle)
+            messageList.messageList[index] =  messageTitle
         }
         else {
             messageList.messageList.add(messageTitle)

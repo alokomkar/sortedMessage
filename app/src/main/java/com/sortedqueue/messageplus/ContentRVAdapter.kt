@@ -73,7 +73,7 @@ class ContentRVAdapter(private val messageList: ArrayList<MessageTitle>,
 
         val index = messageList.indexOf( messageTitle )
         if( index != -1 ) {
-            messageList.add(index, messageTitle!!)
+            messageList[index] = messageTitle!!
             notifyItemChanged(index)
         }
         else {
