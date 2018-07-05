@@ -1,24 +1,51 @@
 package com.sortedqueue.messageplus
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
-import com.sortedqueue.messageplus.base.MessageListener
-import com.sortedqueue.messageplus.base.TYPE_TEXT
-import com.sortedqueue.messageplus.base.hide
-import com.sortedqueue.messageplus.base.showInputDialog
 import com.sortedqueue.messageplus.data.PreferencesView
 
 import kotlinx.android.synthetic.main.activity_copy_paste.*
 import kotlinx.android.synthetic.main.content_copy_paste.*
 import android.content.Intent
 import android.widget.DatePicker
+import android.widget.TimePicker
+import com.sortedqueue.messageplus.base.*
+import com.sortedqueue.messageplus.utils.DatePickerFragment
+import com.sortedqueue.messageplus.utils.TimePickerFragment
+import java.util.*
 
 
-class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener {
+class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+
+    override fun onTimeSet(p0: TimePicker?, hour: Int, minute: Int) {
+        calendar.set(Calendar.HOUR_OF_DAY, hour)
+        calendar.set(Calendar.MINUTE, minute)
+        currentMessageTitle.scheduleTime = calendar.timeInMillis
+        onSuccess(currentMessageTitle)
+    }
+
+    override fun onDateSet(p0: DatePicker?, year: Int, month: Int, day: Int) {
+        calendar.set( year, month, day )
+        currentMessageTitle.scheduleTime = calendar.timeInMillis
+        scheduleTime()
+    }
+
+    private fun scheduleTime() {
+        val timePickerFragment = TimePickerFragment()
+        val bundle = Bundle()
+        if( currentMessageTitle.scheduleTime == 0L ) currentMessageTitle.scheduleTime = Date().time
+        bundle.putLong( CURRENT_TIME, currentMessageTitle.scheduleTime )
+        timePickerFragment.arguments = bundle
+        timePickerFragment.show( supportFragmentManager, "timePicker" )
+    }
+
+    private val calendar = Calendar.getInstance()
 
 
     override fun onSuccess(messageTitle: MessageTitle) {
@@ -66,8 +93,16 @@ class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener {
         this.showInputDialog( messageTitle!!, this )
     }
 
-    override fun setAlarm(messageTitle: MessageTitle) {
+    private lateinit var currentMessageTitle: MessageTitle
 
+    override fun setAlarm(messageTitle: MessageTitle) {
+        val datePickerFragment = DatePickerFragment()
+        currentMessageTitle = messageTitle
+        val bundle = Bundle()
+        if( messageTitle.scheduleTime == 0L ) messageTitle.scheduleTime = Date().time
+        bundle.putLong( CURRENT_TIME, messageTitle.scheduleTime )
+        datePickerFragment.arguments = bundle
+        datePickerFragment.show( supportFragmentManager, "datePicker" )
     }
 
     override fun removeTemplate( messageTitle: MessageTitle) {

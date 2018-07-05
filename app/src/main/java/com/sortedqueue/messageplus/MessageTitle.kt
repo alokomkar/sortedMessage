@@ -9,6 +9,7 @@ class MessageTitle( var messageId : Long = 0L,
                          var messageTitle: String = "",
                          var messageContent : String = "",
                          var messageType : Int = TYPE_TEXT,
+                         var scheduleTime : Long = 0L,
                          var sendCount : Int = 0 ) {
 
     override fun equals(other: Any?): Boolean {

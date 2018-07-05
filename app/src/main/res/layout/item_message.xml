@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     app:cardElevation="@dimen/cardview_default_elevation"
     app:cardCornerRadius="@dimen/cardview_default_radius"
     android:layout_marginTop="@dimen/mini_padding"
@@ -20,10 +21,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            style="@style/Base.TextAppearance.AppCompat.Medium"
+            tools:text="Scheduled at 02 January 2018, 09:00 AM"
+            style="@style/Base.TextAppearance.AppCompat.Small"
+            android:textColor="@android:color/black"
             android:padding="@dimen/mini_padding"
-            android:id="@+id/titleTv"
-            />
+            android:layout_toLeftOf="@+id/ivAlarm"
+            android:layout_toStartOf="@+id/ivAlarm"
+            android:id="@+id/titleTv" />
 
         <ImageView
             android:id="@+id/ivAlarm"

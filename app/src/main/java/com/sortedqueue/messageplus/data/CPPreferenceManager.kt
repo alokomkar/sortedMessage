@@ -30,10 +30,14 @@ class CPPreferenceManager( context : Context ) : PreferencesView {
 
     override fun addMessage( messageTitle: MessageTitle) {
         val messageList = getMessageList()
-        if( !messageList.messageList.contains(messageTitle) ) {
-            messageList.messageList.add(messageTitle)
-            sharedPreference.edit().putString(MESSAGE_LIST, Gson().toJson(messageList) ).apply()
+        val index = messageList.messageList.indexOf(messageTitle)
+        if( index != -1 ) {
+            messageList.messageList.add(index, messageTitle)
         }
+        else {
+            messageList.messageList.add(messageTitle)
+        }
+        sharedPreference.edit().putString(MESSAGE_LIST, Gson().toJson(messageList) ).apply()
     }
 
     private fun getMessageList(): MessageList {

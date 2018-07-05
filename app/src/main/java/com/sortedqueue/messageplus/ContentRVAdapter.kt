@@ -1,12 +1,15 @@
 package com.sortedqueue.messageplus
 
+import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.sortedqueue.messageplus.R
+import com.sortedqueue.messageplus.base.DATE_TIME_FORMAT
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Created by Alok on 02/07/18.
@@ -14,6 +17,7 @@ import com.sortedqueue.messageplus.R
 class ContentRVAdapter(private val messageList: ArrayList<MessageTitle>,
                        private val mainView: MainView) : RecyclerView.Adapter<ContentRVAdapter.ViewHolder>() {
 
+    private val dateTimeFormat : SimpleDateFormat = SimpleDateFormat(DATE_TIME_FORMAT, Locale.ENGLISH)
     override fun getItemCount(): Int {
         return messageList.size
     }
@@ -22,8 +26,19 @@ class ContentRVAdapter(private val messageList: ArrayList<MessageTitle>,
         return ViewHolder( LayoutInflater.from(parent?.context).inflate(R.layout.item_message, parent, false) )
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        holder?.contentTv?.text = messageList[position].messageContent
+        val messageTitle = messageList[position]
+        holder?.contentTv?.text = messageTitle.messageContent
+        if( messageTitle.scheduleTime != 0L ) {
+            holder?.titleTv?.text = "Scheduled at : " + dateTimeFormat.format(Date(messageList[position].scheduleTime))
+            holder?.ivAlarm?.setImageResource(R.drawable.ic_alarm_on_black_24dp)
+        }
+        else {
+            holder?.titleTv?.text = "Added on : " + dateTimeFormat.format(Date(messageList[position].messageId))
+            holder?.ivAlarm?.setImageResource(R.drawable.ic_alarm_off_black_24dp)
+        }
+
     }
 
     inner class ViewHolder( itemView: View ) : RecyclerView.ViewHolder( itemView ), View.OnClickListener {
@@ -59,11 +74,13 @@ class ContentRVAdapter(private val messageList: ArrayList<MessageTitle>,
         val index = messageList.indexOf( messageTitle )
         if( index != -1 ) {
             messageList.add(index, messageTitle!!)
+            notifyItemChanged(index)
         }
-        else
+        else {
             messageList.add( messageTitle!! )
+            notifyItemInserted(messageList.size - 1)
+        }
 
-        notifyItemInserted(messageList.size - 1)
     }
 
     fun removeMessage(messageTitle: MessageTitle) {
