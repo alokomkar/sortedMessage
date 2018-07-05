@@ -92,6 +92,7 @@ class CPJob : Job() {
                             .setContentIntent(pendingIntent)
                             .setContentTitle(title)
                             .setContentText(desc)
+                            .setPriority(NotificationManager.IMPORTANCE_HIGH)
                             .setWhen(0)
                             .setSound(defaultSoundUri)
 
@@ -128,12 +129,14 @@ class CPJob : Job() {
 
             object: AsyncTask<Void, Void, Unit>() {
                 override fun doInBackground(vararg p0: Void?) {
-                    JobRequest.Builder(REMINDER_TAG + reminder.messageId )
-                            .setExact((reminder.scheduleTime - calendar.timeInMillis))
-                            .setRequiresDeviceIdle(false)
-                            .setExtras(extras)
-                            .build()
-                            .schedule()
+                    if( reminder.scheduleTime > calendar.timeInMillis ) {
+                        JobRequest.Builder(REMINDER_TAG + reminder.messageId )
+                                .setExact((reminder.scheduleTime - calendar.timeInMillis))
+                                .setRequiresDeviceIdle(false)
+                                .setExtras(extras)
+                                .build()
+                                .schedule()
+                    }
                 }
 
                 override fun onPostExecute(result: Unit?) {
