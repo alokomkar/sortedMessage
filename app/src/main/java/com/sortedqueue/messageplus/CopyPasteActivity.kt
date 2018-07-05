@@ -1,9 +1,12 @@
 package com.sortedqueue.messageplus
 
+import android.Manifest
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.os.Bundle
-import android.support.design.widget.Snackbar
+
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
@@ -13,8 +16,11 @@ import com.sortedqueue.messageplus.data.PreferencesView
 import kotlinx.android.synthetic.main.activity_copy_paste.*
 import kotlinx.android.synthetic.main.content_copy_paste.*
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.widget.DatePicker
 import android.widget.TimePicker
+import android.widget.Toast
 import com.sortedqueue.messageplus.base.*
 import com.sortedqueue.messageplus.utils.DatePickerFragment
 import com.sortedqueue.messageplus.utils.TimePickerFragment
@@ -27,8 +33,30 @@ class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener, DatePi
         calendar.set(Calendar.HOUR_OF_DAY, hour)
         calendar.set(Calendar.MINUTE, minute)
         currentMessageTitle?.scheduleTime = calendar.timeInMillis
+        CPJob.cancelJobById( currentMessageTitle!! )
         CPJob.scheduleJob( currentMessageTitle!!, Calendar.getInstance() )
+        checkForPermission()
         onSuccess(currentMessageTitle!!)
+    }
+
+    private val PERMISSIONS_REQUEST: Int = 12312
+
+    private fun checkForPermission() {
+        val permissionList = arrayListOf<String>(Manifest.permission.SEND_SMS)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(permissionList.toTypedArray(), PERMISSIONS_REQUEST)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (requestCode == PERMISSIONS_REQUEST) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+            } else {
+                Toast.makeText(this@CopyPasteActivity, "Some permissions were denied", Toast.LENGTH_LONG).show()
+                checkForPermission()
+            }
+        }
     }
 
     override fun onDateSet(p0: DatePicker?, year: Int, month: Int, day: Int) {
@@ -69,7 +97,8 @@ class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener, DatePi
 
     override fun onSuccess( allMessages: ArrayList<MessageTitle> ) {
         ivSplash.hide()
-        contentAdapter = ContentRVAdapter(allMessages, this)
+        refreshLayout.isRefreshing = false
+        contentAdapter = ContentRVAdapter( allMessages, this )
         contentRecyclerView.adapter = contentAdapter
     }
 
@@ -124,11 +153,13 @@ class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener, DatePi
         presenterView.loadTemplates()
 
         contentRecyclerView.layoutManager = LinearLayoutManager( this )
+        refreshLayout.setOnRefreshListener {
+            refreshLayout.isRefreshing = true
+            presenterView.loadTemplates()
+        }
 
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener {
             addEditTemplate( MessageTitle(System.currentTimeMillis(), "", "", TYPE_TEXT, 0) )
-            Snackbar.make(view, "Message added", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
         }
 
         handleShare()
@@ -139,6 +170,12 @@ class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener, DatePi
             if ("text/plain" == intent.type) {
                 addEditTemplate(MessageTitle(System.currentTimeMillis(), "", intent.getStringExtra(Intent.EXTRA_TEXT), TYPE_TEXT, 0))
             }
+        }
+    }
+
+    inner class UpdateReceiver : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+
         }
     }
 

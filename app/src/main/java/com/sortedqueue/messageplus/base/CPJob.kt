@@ -12,6 +12,8 @@ import android.os.AsyncTask
 import android.os.Build
 
 import android.support.v4.app.NotificationCompat
+import android.telephony.SmsManager
+import android.widget.Toast
 import com.evernote.android.job.Job
 import com.evernote.android.job.JobManager
 import com.evernote.android.job.JobRequest
@@ -86,19 +88,32 @@ class CPJob : Job() {
                         .setSound(defaultSoundUri)
             } else {
 
-                    notificationBuilder = NotificationCompat.Builder(context,channelId)
-                            .setAutoCancel(true)   //Automatically delete the notification
-                            .setSmallIcon(R.mipmap.ic_launcher) //NotificationModel icon
-                            .setContentIntent(pendingIntent)
-                            .setContentTitle(title)
-                            .setContentText(desc)
-                            .setPriority(NotificationManager.IMPORTANCE_HIGH)
-                            .setWhen(0)
-                            .setSound(defaultSoundUri)
+                notificationBuilder = NotificationCompat.Builder(context,channelId)
+                        .setAutoCancel(true)   //Automatically delete the notification
+                        .setSmallIcon(R.mipmap.ic_launcher) //NotificationModel icon
+                        .setContentIntent(pendingIntent)
+                        .setContentTitle(title)
+                        .setContentText(desc)
+                        .setPriority(NotificationManager.IMPORTANCE_HIGH)
+                        .setWhen(0)
+                        .setSound(defaultSoundUri)
 
             }
-            notificationManager.notify(channelId.hashCode(), notificationBuilder.build())
+
+        try {
+            val smsManager = SmsManager.getDefault()
+            smsManager.sendTextMessage("+918147413429", null, desc, null, null);
+            Toast.makeText(context, "Message Sent",
+                    Toast.LENGTH_LONG).show()
+        } catch (e : Exception) {
+            e.printStackTrace()
+            Toast.makeText(context, "Error : " + e.message,
+                    Toast.LENGTH_LONG).show()
+        }
+
+        notificationManager.notify(channelId.hashCode(), notificationBuilder.build())
     }
+
 
     companion object {
 

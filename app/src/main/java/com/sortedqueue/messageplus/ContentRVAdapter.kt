@@ -32,7 +32,12 @@ class ContentRVAdapter(private val messageList: ArrayList<MessageTitle>,
         holder?.contentTv?.text = messageTitle.messageContent
         if( messageTitle.scheduleTime != 0L ) {
             holder?.titleTv?.text = "Scheduled at : " + dateTimeFormat.format(Date(messageList[position].scheduleTime))
-            holder?.ivAlarm?.setImageResource(R.drawable.ic_alarm_on_black_24dp)
+            if( messageTitle.scheduleTime < Calendar.getInstance().timeInMillis ) {
+                holder?.ivAlarm?.setImageResource(R.drawable.ic_done_all_black_24dp)
+            }
+            else
+                holder?.ivAlarm?.setImageResource(R.drawable.ic_alarm_on_black_24dp)
+
         }
         else {
             holder?.titleTv?.text = "Added on : " + dateTimeFormat.format(Date(messageList[position].messageId))
