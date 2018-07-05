@@ -1,6 +1,8 @@
 package com.sortedqueue.messageplus
 
 import android.app.Application
+import com.evernote.android.job.JobManager
+import com.sortedqueue.messageplus.base.CPJobCreator
 import com.sortedqueue.messageplus.data.CPPreferenceManager
 import com.sortedqueue.messageplus.data.PreferencesView
 
@@ -12,6 +14,7 @@ class CPApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        JobManager.create(this).addJobCreator(CPJobCreator())
     }
 
     companion object {

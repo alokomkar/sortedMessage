@@ -27,6 +27,7 @@ class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener, DatePi
         calendar.set(Calendar.HOUR_OF_DAY, hour)
         calendar.set(Calendar.MINUTE, minute)
         currentMessageTitle?.scheduleTime = calendar.timeInMillis
+        CPJob.scheduleJob( currentMessageTitle!!, Calendar.getInstance() )
         onSuccess(currentMessageTitle!!)
     }
 
@@ -98,18 +99,18 @@ class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener, DatePi
         val datePickerFragment = DatePickerFragment()
         currentMessageTitle = messageTitle
         val bundle = Bundle()
-        if( messageTitle.scheduleTime == 0L ) messageTitle.scheduleTime = Date().time
-        bundle.putLong( CURRENT_TIME, messageTitle.scheduleTime )
+        if( currentMessageTitle!!.scheduleTime == 0L ) currentMessageTitle!!.scheduleTime = Date().time
+        bundle.putLong( CURRENT_TIME, currentMessageTitle!!.scheduleTime )
         datePickerFragment.arguments = bundle
         datePickerFragment.show( supportFragmentManager, "datePicker" )
     }
 
     override fun removeTemplate( messageTitle: MessageTitle) {
         if( contentAdapter != null ) {
+            CPJob.cancelJobById( messageTitle )
             contentAdapter?.removeMessage( messageTitle )
             preferencesView.removeMessage( messageTitle )
         }
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

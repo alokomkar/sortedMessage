@@ -12,3 +12,4 @@ val TYPE_GIF = 3
 val MESSAGE_LIST = "messageList"
 val CURRENT_TIME = "currentTime"
 val DATE_TIME_FORMAT = "dd MMM yyyy, hh:mm a"
+val REMINDER_TAG = "Reminder_"
