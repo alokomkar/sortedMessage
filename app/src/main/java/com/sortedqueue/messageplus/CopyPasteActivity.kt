@@ -23,6 +23,7 @@ import android.widget.TimePicker
 import android.widget.Toast
 import com.sortedqueue.messageplus.base.*
 import com.sortedqueue.messageplus.utils.DatePickerFragment
+import com.sortedqueue.messageplus.utils.MessageFragment
 import com.sortedqueue.messageplus.utils.TimePickerFragment
 import java.util.*
 
@@ -42,7 +43,7 @@ class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener, DatePi
     private val PERMISSIONS_REQUEST: Int = 12312
 
     private fun checkForPermission() {
-        val permissionList = arrayListOf<String>(Manifest.permission.SEND_SMS)
+        val permissionList = arrayListOf<String>(Manifest.permission.SEND_SMS, Manifest.permission.READ_PHONE_STATE)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(permissionList.toTypedArray(), PERMISSIONS_REQUEST)
         }
@@ -77,13 +78,19 @@ class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener, DatePi
 
 
     override fun onSuccess(messageTitle: MessageTitle) {
+
+        if( dialogFragment != null )
+            dialogFragment?.dismiss()
+
         preferencesView.addMessage( messageTitle )
         if( contentAdapter != null )
             contentAdapter?.addMessage( messageTitle )
+
     }
 
     override fun onCancel() {
-
+        if( dialogFragment != null )
+            dialogFragment?.dismiss()
     }
 
 
@@ -118,8 +125,20 @@ class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener, DatePi
         startActivity(sendIntent)
     }
 
-    override fun addEditTemplate( messageTitle: MessageTitle? ) {
-        this.showInputDialog( messageTitle!!, this )
+    private var dialogFragment: MessageFragment ?= null
+
+    override fun addEditTemplate(messageTitle: MessageTitle? ) {
+        val ft = supportFragmentManager.beginTransaction()
+        val prev = supportFragmentManager.findFragmentByTag("dialog")
+        if (prev != null) {
+            ft.remove(prev)
+        }
+        ft.addToBackStack(null)
+        dialogFragment = MessageFragment()
+        val bundle = Bundle()
+        bundle.putParcelable(MESSAGE_LIST, messageTitle)
+        dialogFragment?.arguments = bundle
+        dialogFragment?.show(ft, "dialog")
     }
 
     private var currentMessageTitle: MessageTitle ?= null
@@ -159,7 +178,7 @@ class CopyPasteActivity : AppCompatActivity(), MainView, MessageListener, DatePi
         }
 
         fab.setOnClickListener {
-            addEditTemplate( MessageTitle(System.currentTimeMillis(), "", "", TYPE_TEXT, 0) )
+            addEditTemplate( MessageTitle(System.currentTimeMillis(), "", "", TYPE_TEXT,  0) )
         }
 
         handleShare()

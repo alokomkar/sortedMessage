@@ -103,12 +103,8 @@ class CPJob : Job() {
         try {
             val smsManager = SmsManager.getDefault()
             smsManager.sendTextMessage("+918147413429", null, desc, null, null);
-            Toast.makeText(context, "Message Sent",
-                    Toast.LENGTH_LONG).show()
         } catch (e : Exception) {
             e.printStackTrace()
-            Toast.makeText(context, "Error : " + e.message,
-                    Toast.LENGTH_LONG).show()
         }
 
         notificationManager.notify(channelId.hashCode(), notificationBuilder.build())
