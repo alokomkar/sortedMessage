@@ -13,7 +13,6 @@ import android.os.Build
 
 import android.support.v4.app.NotificationCompat
 import android.telephony.SmsManager
-import android.widget.Toast
 import com.evernote.android.job.Job
 import com.evernote.android.job.JobManager
 import com.evernote.android.job.JobRequest
@@ -34,13 +33,13 @@ class CPJob : Job() {
         val gson = Gson()
         if( params.extras.containsKey(MESSAGE_LIST)) {
             val item = gson.fromJson(params.extras[MESSAGE_LIST] as String, MessageTitle::class.java)
-            showNotification( "Alert : " + item.messageTitle, item.messageContent )
+            showNotification( "Alert : " + item.messageTitle, item.messageContent , item )
         }
         return Result.SUCCESS
     }
 
 
-    private fun showNotification(title: String, desc: String?) {
+    private fun showNotification(title: String, desc: String?, item: MessageTitle) {
 
         val pendingIntent = PendingIntent.getActivity(context, 0, Intent(context, CopyPasteActivity::class.java), PendingIntent.FLAG_CANCEL_CURRENT)
 
@@ -100,12 +99,24 @@ class CPJob : Job() {
 
             }
 
-        try {
-            val smsManager = SmsManager.getDefault()
-            smsManager.sendTextMessage("+918147413429", null, desc, null, null);
-        } catch (e : Exception) {
-            e.printStackTrace()
+
+        val smsManager = SmsManager.getDefault()
+        for( contact in item.contacts.split(",") ) {
+            try {
+                if( contact.contains(":") ) {
+                    smsManager.sendTextMessage(contact.split(":")[1].replace(" ", ""), null, desc, null, null);
+                }
+                else {
+                    if( contact.trim().isNotEmpty() )
+                        smsManager.sendTextMessage(contact.replace(" ", ""), null, desc, null, null);
+                }
+            } catch (e : Exception) {
+                e.printStackTrace()
+                continue
+            }
         }
+
+
 
         notificationManager.notify(channelId.hashCode(), notificationBuilder.build())
     }

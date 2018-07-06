@@ -32,6 +32,9 @@ class ContentRVAdapter(private val messageList: ArrayList<MessageTitle>,
         holder?.contentTv?.text = messageTitle.messageContent
         if( messageTitle.scheduleTime != 0L ) {
             holder?.titleTv?.text = "Scheduled at : " + dateTimeFormat.format(Date(messageList[position].scheduleTime))
+            if( messageTitle.contacts.isNotEmpty() ) {
+                holder?.titleTv?.text = "Scheduled at : " + dateTimeFormat.format(Date(messageList[position].scheduleTime)) + " to be sent to " + messageTitle.contacts
+            }
             if( messageTitle.scheduleTime < Calendar.getInstance().timeInMillis ) {
                 holder?.ivAlarm?.setImageResource(R.drawable.ic_done_all_black_24dp)
             }
@@ -41,6 +44,9 @@ class ContentRVAdapter(private val messageList: ArrayList<MessageTitle>,
         }
         else {
             holder?.titleTv?.text = "Added on : " + dateTimeFormat.format(Date(messageList[position].messageId))
+            if( messageTitle.contacts.isNotEmpty() ) {
+                holder?.titleTv?.text = "Added on : " + dateTimeFormat.format(Date(messageList[position].scheduleTime)) + " to be sent to " + messageTitle.contacts
+            }
             holder?.ivAlarm?.setImageResource(R.drawable.ic_alarm_off_black_24dp)
         }
 

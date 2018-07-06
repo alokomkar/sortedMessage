@@ -16,6 +16,7 @@ import android.content.Intent
 import android.app.Activity.RESULT_OK
 import android.database.Cursor
 import android.util.Log
+import android.widget.Toast
 
 
 /**
@@ -38,10 +39,24 @@ class MessageFragment : DialogFragment() {
         messageTitle = arguments.getParcelable<MessageTitle>(MESSAGE_LIST)
 
         etMessage.setText( messageTitle.messageContent )
+        etContacts.setText( messageTitle.contacts )
 
         (tvSave).setOnClickListener {
-            messageTitle.messageContent = etMessage.text.toString()
-            messageListener.onSuccess( messageTitle )
+            etContacts.error = ""
+            var isErrorFound = false
+            if( etContacts.text.isEmpty() ) {
+                etContacts.error = "Required"
+                isErrorFound = true
+            }
+            if( etMessage.text.isEmpty() ) {
+                etMessage.error = "Required"
+                isErrorFound = true
+            }
+            if( !isErrorFound ) {
+                messageTitle.contacts = etContacts.text.toString()
+                messageTitle.messageContent = etMessage.text.toString()
+                messageListener.onSuccess( messageTitle )
+            }
         }
         (tvCancel).setOnClickListener {
             messageListener.onCancel()
